@@ -1,0 +1,45 @@
+package main
+
+import (
+	"time"
+
+	"github.com/gin-gonic/gin"
+)
+
+func main() {
+	r := gin.New()
+
+	// Use the responseTime middleware
+	r.Use(NewXResponseTimer)
+
+	// Define your routes
+	r.GET("/ping", func(c *gin.Context) {
+		c.JSON(200, gin.H{"message": "pong"})
+	})
+
+	r.Run(":8080")
+}
+
+type XResponseTimer struct {
+	gin.ResponseWriter
+	start time.Time
+}
+
+func (w *XResponseTimer) WriteHeader(statusCode int) {
+	duration := time.Since(w.start)
+	w.Header().Set("X-Response-Time", duration.String())
+	w.ResponseWriter.WriteHeader(statusCode)
+}
+
+func (w *XResponseTimer) Write(b []byte) (int, error) {
+	return w.ResponseWriter.Write(b)
+}
+
+func NewXResponseTimer(c *gin.Context) {
+	blw := &XResponseTimer{
+		ResponseWriter: c.Writer,
+		start:          time.Now(),
+	}
+	c.Writer = blw
+	c.Next()
+}
