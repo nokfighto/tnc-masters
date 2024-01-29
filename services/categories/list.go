@@ -1,7 +1,6 @@
 package categories
 
 import (
-	"fmt"
 	"strings"
 	"tnc-masters/pkg/database"
 )
@@ -30,7 +29,7 @@ func List(identifier, valid string) (interface{}, error) {
 		query += "and valid_flag = ? "
 		args = append(args, valid)
 	}
-	fmt.Println(args...)
+	//fmt.Println(args...)
 	var c []Categories
 	err := database.DB.Select(&c, query, args...)
 	if err != nil {
@@ -48,5 +47,5 @@ func Category() {
 }
 
 func SubCategory() {
-	query := `select `
+	//query := `select `
 }

@@ -23,9 +23,9 @@ func main() {
 
 	// init api route
 	route := routes.NewRoute()
-	route.Router.Use(gin.Logger())
-	route.Router.Use(response.NewXResponseTimer)
+	route.Router.Use(gin.Logger(), response.NewXResponseTimer)
 	route.Test()
+	route.BU()
 	route.Categories()
 
 	if err := route.Router.Run(":8888"); err != nil {
