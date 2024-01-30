@@ -20,9 +20,9 @@ func List() (interface{}, error) {
 	query := `select bu_id, name, description, valid_flag, created_date, created_by, updated_date, updated_by
 			  from tnc_business_unit`
 
-	var b []BU
-	if err := database.DB.Select(&b, query); err != nil {
+	var rs []BU
+	if err := database.DB.Select(&rs, query); err != nil {
 		return nil, err
 	}
-	return b, nil
+	return rs, nil
 }

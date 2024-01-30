@@ -13,11 +13,12 @@ type Role struct {
 	CreatedDate time.Time  `db:"created_date" json:"created_date"`
 	CreatedBy   string     `db:"created_by" json:"created_by"`
 	UpdatedDate *time.Time `db:"updated_date" json:"updated_date"`
-	UpdatedBy   string     `db:"updated_by" json:"updated_by"`
+	UpdatedBy   *string    `db:"updated_by" json:"updated_by"`
 }
 
 func List() (interface{}, error) {
-	query := `select role_id,name,key,valid_flag,created_date,created_by,updated_date,updated_by`
+	query := "select role_id, name, `key`, valid_flag, created_by, created_date, updated_by, updated_date "
+	query += "from tnc_role"
 
 	var rs []Role
 	if err := database.DB.Select(&rs, query); err != nil {

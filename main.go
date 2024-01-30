@@ -27,6 +27,7 @@ func main() {
 	route.Test()
 	route.BU()
 	route.Categories()
+	route.Role()
 
 	if err := route.Router.Run(":8888"); err != nil {
 		log.Fatal(err)

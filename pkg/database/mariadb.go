@@ -18,6 +18,8 @@ const (
 var DB *sqlx.DB
 
 func Connect() (func(), error) {
+	log.Println("database connecting...")
+
 	var err error
 	DB, err = sqlx.Connect("mysql", connectionString)
 	if err != nil {
